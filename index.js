@@ -30,6 +30,11 @@ app.get("/lista_productos", async (req, resp) => {
     resp.send(listaProductos)
 })
 
+app.get("/pc-armado", async(req,resp)=> {
+    const listaPc_armados=await Pc_armado.findAll()
+    resp.send(listaPc_armados)
+})
+
 app.get("/producto", async (req, resp) => {
     const productoId = req.query.producto
     const categoriaId = req.query.categoria
