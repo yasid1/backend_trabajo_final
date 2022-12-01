@@ -67,7 +67,6 @@ app.get("/reseñas", async (req, resp) => {
         }
     })
     resp.send(reseñasFiltradas)})
-
 //Recibir reporte
 app.post("/reporte", async (req, resp) => {
     const dataRequest = req.body
@@ -99,7 +98,7 @@ app.post("/reporte", async (req, resp) => {
     try {await Reporte.create({
         usuario_id :  usuarioId,
         nombre : reporteNombre,
-        email : reporteEmail,
+        correo : reporteEmail,
         telefono : reporteTelefono,
         asunto : reporteAsunto,
         descripcion : reporteDescripcion,
