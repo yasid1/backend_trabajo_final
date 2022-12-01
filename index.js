@@ -194,6 +194,31 @@ app.post("/perfil", async (req, resp) => {
     }
     
 })
+//Verificar login
+app.post("/login", async (req,resp) => {
+    const email = req.body.email
+    const password = req.body.password
+
+    const usuario = await Usuario.findOne({
+        where : {
+            email : email,
+            password : password
+        }
+    })
+
+    if(usuario == null) {
+        //Login incorrecto
+        resp.send({
+            error : "Error en login"
+        })
+    } else {
+        //Login correcto
+        resp.send({
+            error : "",
+            token : TOKEN
+        })
+    }
+})
 //
 app.listen(PUERTO, () => {
     console.log(`Servidor web iniciado en puerto ${PUERTO}`)
