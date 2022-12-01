@@ -71,14 +71,14 @@ app.get("/reseñas", async (req, resp) => {
 //Recibir reporte
 app.post("/reporte", async (req, resp) => {
     const dataRequest = req.body
-    const reporteId = dataRequest.reporte_id
+    const usuarioId = dataRequest.usuario_id
     const reporteEmail = dataRequest.reporte_email
     const reporteNombre = dataRequest.reporte_nombre
     const reporteTelefono = dataRequest.reporte_telefono
     const reporteAsunto = dataRequest.reporte_asunto
     const reporteDescripcion = dataRequest.reporte_descripcion
 
-    if (reporteId == null || reporteId == undefined) resp.send({
+    if (usuarioId == null || usuarioId == undefined) resp.send({
         error : "ERROR. Debe enviar un reporte_id"
     })
     if (reporteEmail == null || reporteEmail == undefined) resp.send({
@@ -96,15 +96,20 @@ app.post("/reporte", async (req, resp) => {
     if (reporteDescripcion == null || reporteDescripcion == undefined) resp.send({
         error : "ERROR. Debe enviar un reporteDescripcion"
     })
-
-    await Reporte.create({
-        usuario_id :  reporteId,
+    try {await Reporte.create({
+        usuario_id :  usuarioId,
         nombre : reporteNombre,
         email : reporteEmail,
         telefono : reporteTelefono,
         asunto : reporteAsunto,
         descripcion : reporteDescripcion,
-    })
+    })}
+    catch (error) {
+        resp.send ({
+            error : `ERROR. ${error}`
+        })
+    }
+    
 })
 //
 app.listen(PUERTO, () => {
