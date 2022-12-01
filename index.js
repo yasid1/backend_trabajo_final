@@ -53,7 +53,11 @@ app.get("/producto", async (req, resp) => {
         resp.send(listadoProductos)
     }
 })
-
+//Peticiones Diego
+app.get("/reseñas", async (req, resp) => {
+    const listaReseñas = await Reseña.findAll()
+    resp.send(listaReseñas)})
+//
 app.listen(PUERTO, () => {
     console.log(`Servidor web iniciado en puerto ${PUERTO}`)
 })
