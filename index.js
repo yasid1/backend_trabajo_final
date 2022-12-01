@@ -67,6 +67,45 @@ app.get("/reseñas", async (req, resp) => {
         }
     })
     resp.send(reseñasFiltradas)})
+
+//Recibir reporte
+app.post("/reporte", async (req, resp) => {
+    const dataRequest = req.body
+    const reporteId = dataRequest.reporte_id
+    const reporteEmail = dataRequest.reporte_email
+    const reporteNombre = dataRequest.reporte_nombre
+    const reporteTelefono = dataRequest.reporte_telefono
+    const reporteAsunto = dataRequest.reporte_asunto
+    const reporteDescripcion = dataRequest.reporte_descripcion
+
+    if (reporteId == null || reporteId == undefined) resp.send({
+        error : "ERROR. Debe enviar un reporte_id"
+    })
+    if (reporteEmail == null || reporteEmail == undefined) resp.send({
+        error : "ERROR. Debe enviar un reporteEmail"
+    })
+    if (reporteNombre == null || reporteNombre == undefined) resp.send({
+        error : "ERROR. Debe enviar un reporteNombre"
+    })
+    if (reporteTelefono == null || reporteTelefono == undefined) resp.send({
+        error : "ERROR. Debe enviar un reporteTelefono"
+    })
+    if (reporteAsunto == null || reporteAsunto == undefined) resp.send({
+        error : "ERROR. Debe enviar un reporteAsunto"
+    })
+    if (reporteDescripcion == null || reporteDescripcion == undefined) resp.send({
+        error : "ERROR. Debe enviar un reporteDescripcion"
+    })
+
+    await Reporte.create({
+        usuario_id :  reporteId,
+        nombre : reporteNombre,
+        email : reporteEmail,
+        telefono : reporteTelefono,
+        asunto : reporteAsunto,
+        descripcion : reporteDescripcion,
+    })
+})
 //
 app.listen(PUERTO, () => {
     console.log(`Servidor web iniciado en puerto ${PUERTO}`)
