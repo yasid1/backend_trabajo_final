@@ -110,6 +110,63 @@ app.post("/reporte", async (req, resp) => {
     }
     
 })
+app.post("/perfil", async (req, resp) => {
+    const dataRequest = req.body
+    const usuarioId = dataRequest.usuario_id
+    const perfilNombre = dataRequest.perfil_nombre
+    const perfilApellido = dataRequest.perfil_apellido
+    const perfilCorreo = dataRequest.perfil_correo
+    const perfilDireccion = dataRequest.perfil_direccion
+    const perfilDepartamento = dataRequest.perfil_Departamento
+    const perfilCiudad = dataRequest.perfil_Ciudad
+    const perfilZip = dataRequest.perfil_Zip
+    const perfilTelefono = dataRequest.perfil_Telefono
+
+    if (usuarioId == null || usuarioId == undefined) resp.send({
+        error : "ERROR."
+    })
+    if (perfilNombre == null || perfilNombre == undefined) resp.send({
+        error : "ERROR. "
+    })
+    if (perfilApellido == null || perfilApellido == undefined) resp.send({
+        error : "ERROR. "
+    })
+    if (perfilCorreo == null || perfilCorreo == undefined) resp.send({
+        error : "ERROR. "
+    })
+    if (perfilDireccion == null || perfilDireccion == undefined) resp.send({
+        error : "ERROR."
+    })
+    if (perfilDepartamento == null || perfilDepartamento == undefined) resp.send({
+        error : "ERROR."
+    })
+    if (perfilCiudad == null || perfilCiudad == undefined) resp.send({
+        error : "ERROR."
+    })
+    if (perfilZip == null || perfilZip == undefined) resp.send({
+        error : "ERROR."
+    })
+    if (perfilTelefono == null || perfilTelefono == undefined) resp.send({
+        error : "ERROR."
+    })
+    try {await Usuario.update({
+        nombre :  perfilNombre,
+        apellido : perfilApellido,
+        correo : perfilCorreo,
+        direccion : perfilDireccion,
+        departamento : perfilDepartamento,
+        ciudad : perfilCiudad,
+        codigo_postal : perfilZip,
+        telefono : perfilTelefono,
+    },
+    {where: {id : usuarioId},})}
+    catch (error) {
+        resp.send ({
+            error : `ERROR. ${error}`
+        })
+    }
+    
+})
 //
 app.listen(PUERTO, () => {
     console.log(`Servidor web iniciado en puerto ${PUERTO}`)
