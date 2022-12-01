@@ -30,27 +30,50 @@ app.get("/lista_productos", async (req, resp) => {
     resp.send(listaProductos)
 })
 
-app.get("/producto", async (req, resp) => {
-    const productoId = req.query.producto
-    const categoriaId = req.query.categoria
+app.get("/pc_armado", async (req, resp) => {
+    const listaPcarmado = await Pc_armado.findAll()
+    resp.send(listaPcarmado)
+})
 
-    if (categoriaId == undefined || categoriaId === "-1"){
+app.get("/producto", async (req, resp) => {
+    const productoId = req.query.productoId
+
+    if (productoId == undefined || productoId === "-1"){
         // Caso que no se seleccione ciclo
-        const listadoProductos = await Producto.findAll({
-            where : {
-                id : productoId
-            }
-        })
+        const listadoProductos = await Producto.findAll()
         resp.send(listadoProductos)
     }else {
         // Caso que SI se seleccione ciclo
-        const listadoProductos = await Evaluacion.findAll({
+        const listadoProductos = await Producto.findAll({
             where : {
                 id : productoId,
-                categoria : categoriaId
             }
         })
         resp.send(listadoProductos)
+    }
+})
+
+app.get("/recomendacion", async (req, resp) => {
+    const pcarmadoid = req.query.pcarmadoID
+    const productoid = req.query.producto
+
+    if (productoid == undefined || productoid === "-1"){
+        // Caso que no se seleccione ciclo
+        const listadoArpr = await Pc_armado_producto.findAll({
+            where:{
+                pc_armado_id : pcarmadoid
+            }
+        })
+        resp.send(listadoArpr)
+    }else {
+        // Caso que SI se seleccione ciclo
+        const listadoArpr = await Pc_armado_producto.findAll({
+            where : {
+                pc_armado_id : pcarmadoid,
+                producto_id :productoid
+            }
+        })
+        resp.send(listadoArpr)
     }
 })
 
