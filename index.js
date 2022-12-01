@@ -67,6 +67,15 @@ app.get("/reseñas", async (req, resp) => {
         }
     })
     resp.send(reseñasFiltradas)})
+app.get("/datosperfil", async (req, resp) => {
+    const idUsuario = req.query.id;
+    const perfilFiltrado = await Usuario.findAll({
+        where : {
+            id : idUsuario,
+        },
+    });
+    resp.send(perfilFiltrado)
+})
 //Recibir reporte
 app.post("/reporte", async (req, resp) => {
     const dataRequest = req.body
